@@ -1,0 +1,5 @@
+Automatized_camera
+#Exclude all folder
+RaspberryPi/*
+#Except
+!RaspberryPi/python_grbl.py
