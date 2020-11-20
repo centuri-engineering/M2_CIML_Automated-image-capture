@@ -1,23 +1,33 @@
-#!/usr/bin/env python
-"""\
+#!/usr/bin/env python #If you have several versions of Python installed, /usr/bin/env will ensure the interpreter used is the first one on your environment's $PATH
+"""
 Simple g-code streaming script for grbl
 """
- 
-import serial
-import time
- 
-# Open grbl serial port
-#s = serial.Serial('/dev/ttyACM0',115200)
-s = serial.Serial('/dev/ttyUSB0',115200)
 
+#libraries import
+import serial #https://pyserial.readthedocs.io/en/latest/pyserial.html
+import time #https://pypi.org/project/pytime/
+
+# Open grbl serial port
+baudrate = 115200 # since grbl 1.1 is installed, the default baudrate is set to 115200
+#s = serial.Serial('/dev/ttyACM0',115200) #For the Joy-it micro-controller with the CNC shield
+s = serial.Serial('/dev/ttyUSB0',baudrate) #For the microcontroller/
  
 # Open g-code file
-f = open('somefile.gcode','r')
+f = open('somefile.gcode','r') # 'r' : open text file for reading only
  
 # Wake up grbl
+#s.write(b"\r\n\r\n")
+print(s.read_all())
+time.sleep(2)   # Wait for grbl to initialize
+print(s.read_all())
+s.flushInput()  # Flush startup text in serial input
+print(s.read_all())
+time.sleep(2)   # Wait for grbl to initialize
+print(s.read_all())
 s.write(b"\r\n\r\n")
 time.sleep(2)   # Wait for grbl to initialize
-s.flushInput()  # Flush startup text in serial input
+print(s.read_all())
+
 print('here1')
 # Stream g-code to grbl
 for line in f:
