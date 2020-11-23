@@ -13,12 +13,9 @@ baudrate = 115200 # since grbl 1.1 is installed, the default baudrate is set to 
 #s = serial.Serial('/dev/ttyACM0',115200) #For the Joy-it micro-controller with the CNC shield
 s = serial.Serial('/dev/ttyUSB0',baudrate) #For the microcontroller/
  
-# Open g-code file
-f = open('somefile.gcode','r') # 'r' : open text file for reading only
- 
-# Wake up grbl : waiting 2 seconds is enough wake it up. Some also use "s.write(b"\r\n\r\n")" but it is not needed.
+# Wake up grbl : waiting 2 seconds is enough to wake it up. Some also use "s.write(b"\r\n\r\n")" but it is not needed.
 time.sleep(2)   # Wait for grbl to initialize
-print(s.read_all()) # Should read "Grbl 1.1f ['$' for help]" if everything goes fine
+#print(s.read_all()) # Should read "Grbl 1.1f ['$' for help]" if everything goes fine
 s.flushInput()  # Flush startup text in serial input
 
 #Individual Petri dish information
@@ -32,12 +29,10 @@ diam_well = 16.3 # in mm
 move = dist_inter_well+diam_well # distance for a single move in X = Y
 Ycoord_along_Y =  np.arange(0,nb_well_along_Y*move, move)
 Ycoord_zigzag = np.reshape(np.transpose(np.tile(Ycoord_along_Y, (nb_well_along_X,1))), (1,nb_well))
-print(Ycoord_zigzag)
 
 Xcoord_along_X_single = np.arange(0,nb_well_along_X*move, move)
 Xcoord_along_X_goback = np.concatenate((Xcoord_along_X_single, Xcoord_along_X_single[::-1]), axis=None) # To use a zig-zag pattern 
 Xcoord_zigzag = np.tile(Xcoord_along_X_goback, (1,nb_well_along_Y)) # 
-print(Xcoord_zigzag)
 
 #Boxes information
 nb_box = 4
