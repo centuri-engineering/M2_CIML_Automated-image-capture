@@ -6,6 +6,11 @@ Simple g-code streaming script for grbl
 #libraries import
 import serial #https://pyserial.readthedocs.io/en/latest/pyserial.html
 import time #https://pypi.org/project/pytime/
+import numpy as np #https://numpy.org/
+import struct
+def binary(num):
+    return ''.join(bin(ord(c)).replace('0b', '').rjust(8, '0') for c in struct.pack('!f', num))
+
 
 # Open grbl serial port
 baudrate = 115200 # since grbl 1.1 is installed, the default baudrate is set to 115200
@@ -15,39 +20,41 @@ s = serial.Serial('/dev/ttyUSB0',baudrate) #For the microcontroller/
 # Open g-code file
 f = open('somefile.gcode','r') # 'r' : open text file for reading only
  
-# Wake up grbl
-#s.write(b"\r\n\r\n")
-print(s.read_all())
+# Wake up grbl : waiting 2 seconds is enough wake it up. Some also use "s.write(b"\r\n\r\n")" but it is not needed.
 time.sleep(2)   # Wait for grbl to initialize
-print(s.read_all())
+print(s.read_all()) # Should read "Grbl 1.1f ['$' for help]" if everything goes fine
 s.flushInput()  # Flush startup text in serial input
-print(s.read_all())
-time.sleep(2)   # Wait for grbl to initialize
-print(s.read_all())
-s.write(b"\r\n\r\n")
-time.sleep(2)   # Wait for grbl to initialize
-print(s.read_all())
 
-print('here1')
-# Stream g-code to grbl
-for line in f:
-    print('here2')
-    l = line.strip() # Strip all EOL characters for streaming
-    print('here2')
-    print('Sending: ' + l, end=" ")    
-    print('here2')
-    s.write(l.encode() + b'\n') # Send g-code block to grbl
-    print('here2')
-    #grbl_out = s.readline() # Wait for grbl response with carriage return
-    print('here2')
-    #print (' : ' + grbl_out.strip())
-    print('here2')
-    time.sleep(2)   # Wait for grbl to initialize
+#Individual Petri dish information
+nb_well_along_Y = 4 #when taken horizontally
+nb_well_along_X = 6 # when taken horizontally
+nb_well = nb_well_along_X*nb_well_along_Y
+dist_inter_well = 3 # in mm
+diam_well = 16.3 # in mm
 
-print('here3')
-# Wait here until grbl is finished to close serial port and file.
-#raw_input("  Press <Enter> to exit and disable grbl.")
- 
-# Close file and serial port
-f.close()
+#Making X and Y arrays for Gcode moves
+move = dist_inter_well+diam_well # distance for a single move in X = Y
+Ycoord_along_Y =  np.arange(0,nb_well_along_Y*move, move)
+Ycoord_zigzag = np.reshape(np.transpose(np.tile(Ycoord_along_Y, (nb_well_along_X,1))), (1,nb_well))
+print(Ycoord_zigzag)
+
+Xcoord_along_X_single = np.arange(0,nb_well_along_X*move, move)
+Xcoord_along_X_goback = np.concatenate((Xcoord_along_X_single, Xcoord_along_X_single[::-1]), axis=None) # To use a zig-zag pattern 
+Xcoord_zigzag = np.tile(Xcoord_along_X_goback, (1,nb_well_along_Y)) # 
+print(Xcoord_zigzag)
+
+#Boxes information
+nb_box = 4
+box_along_X = 127.8 # in mm
+box_along_Y = 85.5 # in mm
+dist_inter_box_X = 20 # in mm
+dist_inter_box_Y = dist_inter_box_X # in mm
+
+#s.write(b'$H') # To activate once the end stops are installed on the stage
+s.write(b'G90 \n')
+for x in range(nb_well):
+    s.write(b'G0 X' + str(Xcoord_zigzag[0,x]).encode() + b'\n') # Send g-code block to grbl
+    time.sleep(1)
+
+# Close serial port
 s.close()
