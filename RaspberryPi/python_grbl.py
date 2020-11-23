@@ -7,10 +7,6 @@ Simple g-code streaming script for grbl
 import serial #https://pyserial.readthedocs.io/en/latest/pyserial.html
 import time #https://pypi.org/project/pytime/
 import numpy as np #https://numpy.org/
-import struct
-def binary(num):
-    return ''.join(bin(ord(c)).replace('0b', '').rjust(8, '0') for c in struct.pack('!f', num))
-
 
 # Open grbl serial port
 baudrate = 115200 # since grbl 1.1 is installed, the default baudrate is set to 115200
