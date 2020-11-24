@@ -1,0 +1,25 @@
+[project]
+
+name = "M2_CIML_Automated-image-capture"
+version = "0.1.0"
+description = "Automate image capture"
+authors = [
+    "Mathias LECHELON <mathias.LECHELON@univ-amu.fr>"
+]
+license = "MIT"
+readme = "README.md"
+python = "^3.6"
+homepage = "https://github.com/MathiasL-CENTURI/M2_CIML_Automated-image-capture"
+repository = "https://github.com/MathiasL-CENTURI/M2_CIML_Automated-image-capture"
+documentation = "https://github.com/MathiasL-CENTURI/M2_CIML_Automated-image-capture"
+
+keywords = ["RaspberryPi", "scanning"]
+
+classifiers = [
+    "Topic :: Scientific/Engineering :: Visualization"
+]
+
+# Requirements
+[dependencies]
+numpy = "^1.9"
+pyserial = "^3.4"
