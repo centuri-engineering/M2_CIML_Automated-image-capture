@@ -1,4 +1,5 @@
 Automatized_camera
+.vscode/
 #Exclude all folder
 RaspberryPi/*
 #Except
