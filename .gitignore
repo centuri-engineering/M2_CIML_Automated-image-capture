@@ -4,3 +4,4 @@ Automatized_camera
 RaspberryPi/*
 #Except
 !RaspberryPi/python_grbl.py
+!RaspberryPi/config.py

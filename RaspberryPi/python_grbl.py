@@ -1,6 +1,6 @@
 #!/usr/bin/env python #If you have several versions of Python installed, /usr/bin/env will ensure the interpreter used is the first one on your environment's $PATH
 """
-G-code streaming script for grbl
+G-code streaming script for grbl and automatized camera
 """
 
 # libraries import
