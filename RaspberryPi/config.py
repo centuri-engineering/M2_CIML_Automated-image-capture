@@ -20,4 +20,4 @@ box_grid = {
     "dist_inter_box_Y": 20,
 }
 
-# Camera settings sdfghjghj
+# Camera setting
