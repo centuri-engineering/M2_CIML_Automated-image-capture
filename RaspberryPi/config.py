@@ -8,8 +8,8 @@ info = {"total_duration": 240, "elapse_time": 120, "delay_for_picture": 1}
 
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
-    "nb_wells_along_X": 4,
-    "nb_wells_along_y": 6,
+    "nb_well_along_X": 4,
+    "nb_well_along_Y": 6,
     "dist_inter_well": 3,
     "diam_well": 16.3,
     "size_along_X": 127.8,
@@ -17,11 +17,18 @@ box = {
 }
 
 # All petri dish information (boxes), dimensions (dist, size) in mm
-box_grid = {
-    "nb_boxes_along_X": 2,
-    "nb_boxes_along_y": 2,
+box_array = {
+    "nb_box_along_X": 2,
+    "nb_box_along_Y": 2,
     "dist_inter_box_X": 20,
     "dist_inter_box_Y": 20,
 }
 
+# Serial settings
+ser_set = {
+    "baudrate": 115200,  # since grbl 1.1 is installed, the default baudrate is set to 115200
+    "board_path": "/dev/ttyUSB0",  # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
+}
+
 # Camera setting
+cam_set = {"delay_for_picture": 1}  # in seconds

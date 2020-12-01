@@ -56,8 +56,8 @@ dist_inter_box_X = 20  # dimensions in mm
 dist_inter_box_Y = dist_inter_box_X  # dimensions in mm
 
 # Making X and Y arrays for Gcode moves, for a Petri dish
-box_move_along_X = box_along_X + nb_box_along_X
-box_move_along_Y = box_along_Y + nb_box_along_Y
+box_move_along_X = box_along_X + dist_inter_box_X
+box_move_along_Y = box_along_Y + dist_inter_box_Y
 # For X
 Xboxcoord_along_X_single = np.arange(
     0, nb_box_along_X * box_move_along_X, box_move_along_X
