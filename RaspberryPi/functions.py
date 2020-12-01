@@ -6,8 +6,6 @@ import serial
 import time
 import numpy as np
 from picamera import PiCamera
-
-camera = PiCamera()
 from config import *
 
 # Time when loops will start
@@ -79,6 +77,7 @@ def camera_control(well_coord, nb_well, box_coord, nb_box, starting_loops):
         s.flushInput()  # Flush startup text in serial input
         # s.write(b'$H') # To activate once the end stops are installed on the stage
         s.write(b"G90 \n")
+        camera = PiCamera()
         camera.start_preview()
         start = time.time()  # Starts a timer
         for it0, start_loop in enumerate(starting_loops):  # Loops to take the pictures
@@ -95,11 +94,12 @@ def camera_control(well_coord, nb_well, box_coord, nb_box, starting_loops):
                 ):  # Loop to define the coordinates of each well of the Petri dish
                     s.write(
                         b"G0 X"
-                        + str(well_coord[0, it1] + well_coord[1, it2]).encode()
+                        + str(well_coord[0, it2] + box_coord[1, it1]).encode()
                         + b" Y"  # Send x g-code coord block to grbl
-                        + str(box_coord[0, it1] + box_coord[1, it2]).encode()
+                        + str(well_coord[0, it2] + box_coord[1, it1]).encode()
                         + b"\n"
                     )  # Send Y g-code coord block to grbl
+
                     camera.capture(
                         "images/image"
                         + str(it0 + 1)
