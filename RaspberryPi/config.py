@@ -2,6 +2,10 @@
 File containing the main constants to be modified.
 """
 
+# General information, time in seconds
+info = {"total_duration": 240, "elapse_time": 120, "delay_for_picture": 1}
+
+
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
     "nb_wells_along_X": 4,

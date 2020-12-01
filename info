@@ -1,0 +1,19 @@
+pyinstaller
+
+config.py => avec les paramètres de config
+import config
+
+dims = {"nom" : valeur,
+..}
+
+-------------
+from config import dims
+dims["nom"] => comprend que dimensions
+
+
+dry development
+
+mesgrid => pour faire les loop box et well
+
+miniconda à installer sur espace utilisateur
+

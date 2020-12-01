@@ -11,20 +11,9 @@ from picamera import PiCamera
 
 camera = PiCamera()
 
-# General information:
-total_duration = 240  # duration of the experiment in seconds
-elapse_time = 120  # Time in seconds
-delay_for_picture = 1  # delay in seconds
 starting_loops = np.arange(
     0, total_duration + 1, elapse_time
 )  # Times when loops will start
-
-# Individual Petri dish information
-nb_well_along_Y = 4  # when taken horizontally
-nb_well_along_X = 6  # when taken horizontally
-nb_well = nb_well_along_X * nb_well_along_Y
-dist_inter_well = 3  # in mm, similar in X and Y
-diam_well = 16.3  # in mm
 
 # Making X and Y arrays for Gcode moves, for a Petri dish
 dish_move = dist_inter_well + diam_well  # distance for a single move in X = Y
@@ -45,15 +34,6 @@ Xcoord_along_X_goback = np.concatenate(
 Xcoord_zigzag_dish = np.tile(Xcoord_along_X_goback, (1, (nb_well_along_Y)))[
     :, 0:nb_well
 ]  # Full coordinates in X for 1 petri dish
-
-# Boxes information (box = petri dish)
-nb_box_along_X = 2  # Number of boxes on the X axis
-nb_box_along_Y = 2  # Number of boxes on the Y axis
-nb_box = nb_box_along_X * nb_box_along_Y  # Total number of boxes
-box_along_X = 127.8  # dimensions in mm
-box_along_Y = 85.5  # dimensions in mm
-dist_inter_box_X = 20  # dimensions in mm
-dist_inter_box_Y = dist_inter_box_X  # dimensions in mm
 
 # Making X and Y arrays for Gcode moves, for a Petri dish
 box_move_along_X = box_along_X + nb_box_along_X
