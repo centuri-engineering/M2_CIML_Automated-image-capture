@@ -1,6 +1,7 @@
 Automatized_camera
 .vscode/
 info.txt
+RaspberryPi/python_grbl.py
 #Exclude all folder
 RaspberryPi/*
 #Except
