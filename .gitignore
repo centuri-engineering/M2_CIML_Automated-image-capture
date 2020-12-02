@@ -1,12 +1,10 @@
 Automatized_camera
 .vscode/
 info.txt
-README.md
-# #Exclude all folder
-# RaspberryPi/*
-# #Except
-# !RaspberryPi/functions.py
-# !RaspberryPi/main.py
-# !RaspberryPi/config.py
+#Exclude all folder
+RaspberryPi/*
+#Except
+!RaspberryPi/functions.py
+!RaspberryPi/main.py
+!RaspberryPi/config.py
 
-RaspberryPi/python_grbl.py
