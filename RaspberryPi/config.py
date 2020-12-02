@@ -5,7 +5,6 @@ File containing the main constants to be modified.
 # General information, time in seconds
 info = {"total_duration": 240, "elapse_time": 120, "delay_for_picture": 1}
 
-
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
     "nb_well_along_X": 4,
@@ -26,8 +25,10 @@ box_array = {
 
 # Serial settings
 ser_set = {
-    "baudrate": 115200,  # since grbl 1.1 is installed, the default baudrate is set to 115200
-    "board_path": "/dev/ttyUSB0",  # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
+    "baudrate":
+    115200,  # since grbl 1.1 installed, the default baudrate is set to 115200
+    # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
+    "board_path": "/dev/ttyUSB0",
 }
 
 # Camera setting
