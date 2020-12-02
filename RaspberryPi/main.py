@@ -13,4 +13,4 @@ import functions as fun
 # Main program:
 well_coord = fun.well_scanning_zigzag(con.box)
 box_coord = fun.box_scanning_zigzag(con.box_array)
-fun.camera_control(well_coord, fun.nb_well, box_coord, fun.nb_box, fun.starting_loops)
+fun.camera_control(well_coord, box_coord, fun.starting_loops)

@@ -69,7 +69,7 @@ def box_scanning_zigzag(box_array):
     return box_coord_zigzag
 
 
-def camera_control(well_coord, nb_well, box_coord, nb_box, starting_loops):
+def camera_control(well_coord, box_coord, starting_loops):
     nb_well = box["nb_well_along_X"] * box["nb_well_along_Y"]
     nb_box = box_array["nb_box_along_X"] * box_array["nb_box_along_Y"]
     # Use a control manager to open serial port:
@@ -92,11 +92,11 @@ def camera_control(well_coord, nb_well, box_coord, nb_box, starting_loops):
                 for it1, it2 in product(range(nb_box), range(nb_well)):
                     x_mv = str(well_coord[0, it2] + box_coord[0, it1]).encode()
                     y_mv = str(well_coord[1, it2] + box_coord[1, it1]).encode()
-                    s.write(b"GO X" + x_mv + b" Y" + y_mv + b"\n")
+                    s.write(b"G0 X" + x_mv + b" Y" + y_mv + b"\n")
 
                     im_path = (
                         f"images/image{it0+1:04d}_box{it1+1:04d}_well{it2+1:04d}.jpg"
                     )
                     camera.capture(im_path)
                     time.sleep(cam_set["delay_for_picture"])
-    camera.stop_preview()
+        camera.stop_preview()
