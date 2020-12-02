@@ -33,7 +33,8 @@ Ycoord_along_Y_single = np.arange(
     0, nb_well_along_Y * dish_move, dish_move
 )  # Coordinates in Y for a single line
 Ycoord_zigzag_dish = np.reshape(
-    np.transpose(np.tile(Ycoord_along_Y_single, (nb_well_along_X, 1))), (1, nb_well)
+    np.transpose(np.tile(Ycoord_along_Y_single,
+                         (nb_well_along_X, 1))), (1, nb_well)
 )  # Full coordinates in Y for 1 petri dish
 # For X
 Xcoord_along_X_single = np.arange(
