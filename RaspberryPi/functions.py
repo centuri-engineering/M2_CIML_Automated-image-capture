@@ -81,7 +81,7 @@ def camera_control(well_coord, nb_well, box_coord, nb_box, starting_loops):
         # s.write(b'$H')
         s.write(b"G90 \n")
         camera = PiCamera()
-        camera.start_preview()
+        camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
         start = time.time()
         for it0, start_loop in enumerate(starting_loops):
             # if it0 != 0:
