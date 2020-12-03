@@ -4,13 +4,12 @@ G-code streaming script for grbl and automatized camera
 """
 
 # libraries import
-import serial  # https://pyserial.readthedocs.io/en/latest/pyserial.html
-import time  # https://pypi.org/project/pytime/
-from picamera import PiCamera
 import config as con
 import functions as fun
 
 # Main program:
 well_coord = fun.well_scanning_zigzag(con.box)
-box_coord = fun.box_scanning_zigzag(con.box_array)
-fun.camera_control(well_coord, box_coord, fun.starting_loops)
+box_coord = fun.box_scanning_zigzag(con.box_array, con.box)
+fun.camera_control(
+    well_coord, box_coord, con.box, con.box_array, con.ser_set, con.cam_set
+)
