@@ -30,5 +30,5 @@ The code is subdivided into 3 main files:
 ## Yet to do
 * Placing the end stops on the frame, on each axis;
 * Defining the bottom left well as the zero position.
-
+* Etc.
 ![scheme](images/scheme.png)
