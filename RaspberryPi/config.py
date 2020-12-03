@@ -3,7 +3,7 @@ File containing the main constants to be modified.
 """
 
 # General information, time in seconds
-info = {"total_duration": 240, "elapse_time": 120, "delay_for_picture": 1}
+info = {"total_duration": 400, "elapse_time": 200, "delay_for_picture": 1}
 
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
