@@ -109,7 +109,7 @@ def camera_control(
         start = round(time.time())
 
         if not os.path.exists("images/"):
-            os.mknod("images/")
+            os.makedirs("images/")
 
         for it0, start_loop in enumerate(starting_loops):
             if it0 != 0 and (int(time.time()) - int(start)) != int(start_loop):
