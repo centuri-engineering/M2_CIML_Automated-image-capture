@@ -6,11 +6,12 @@ DO NOT MODIFY
 import serial
 import time
 import numpy as np
+import os
 from picamera import PiCamera
 import config as con
 from itertools import product
 
-# FUNCTIONS
+
 # Function 1:
 def well_scanning_zigzag(box=con.box):
     """Creates a zigzag pattern to place the camera above each well,
@@ -106,6 +107,10 @@ def camera_control(
         camera = PiCamera()
         camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
         start = round(time.time())
+
+        if not os.path.exists("images/"):
+            os.mknod("images/")
+
         for it0, start_loop in enumerate(starting_loops):
             if it0 != 0 and (int(time.time()) - int(start)) != int(start_loop):
                 step_time = round(time.time())
@@ -116,9 +121,7 @@ def camera_control(
                 x_mv = str(well_coord[0, it2] + box_coord[0, it1]).encode()
                 y_mv = str(well_coord[1, it2] + box_coord[1, it1]).encode()
                 s.write(b"G0 X" + x_mv + b" Y" + y_mv + b"\n")
-                im_path = (
-                    f"images/image{it0+1:04d}_box{it1+1:04d}_well{it2+1:04d}.jpg"
-                )
+                im_path = f"images/image{it0+1:04d}_box{it1+1:04d}_well{it2+1:04d}.jpg"
                 camera.capture(im_path)
                 time.sleep(cam_set["delay_for_picture"])
         camera.stop_preview()
