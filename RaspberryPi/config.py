@@ -7,8 +7,8 @@ info = {"total_duration": 400, "elapse_time": 200, "delay_for_picture": 1}
 
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
-    "nb_well_along_X": 4,
-    "nb_well_along_Y": 6,
+    "nb_well_along_X": 6,
+    "nb_well_along_Y": 4,
     "dist_inter_well": 3,
     "diam_well": 16.3,
     "size_along_X": 127.8,
