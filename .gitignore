@@ -8,5 +8,4 @@ RaspberryPi/*
 !RaspberryPi/functions.py
 !RaspberryPi/main.py
 !RaspberryPi/config.py
-!Run_program.sh
-
+!RaspberryPi/images/
