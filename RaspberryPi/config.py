@@ -28,7 +28,7 @@ ser_set = {
     "baudrate":
     115200,  # since grbl 1.1 installed, the default baudrate is set to 115200
     # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
-    "board_path": "/dev/ttyUSB0",
+    "board_path": "/dev/ttyACM0",
 }
 
 # Camera setting
