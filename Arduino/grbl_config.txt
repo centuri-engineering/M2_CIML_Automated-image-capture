@@ -13,8 +13,8 @@ $11=1.000
 $12=0.002
 $13=0
 $20=0
-$21=0
-$22=0
+$21=1
+$22=1
 $23=0
 $24=25.000
 $25=500.000
@@ -40,4 +40,4 @@ To see the settings in the Arduino IDE Monitor, make sure the baudrate is set to
 Type $$ and type Enter (or click Send) in sending bar of the monitor.
 More info about this here : https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration
 
-Limit switches normally-closed (NC) added, therefore $5=1 .
+Limit switches normally-closed (NC) added, therefore $5=1
