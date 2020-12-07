@@ -6,7 +6,7 @@ $1=25
 $2=0
 $3=0
 $4=0
-$5=0
+$5=1 
 $6=0
 $10=1
 $11=1.000
@@ -39,3 +39,5 @@ $132=200.000
 To see the settings in the Arduino IDE Monitor, make sure the baudrate is set to 115200 (with GRBL 1.1), and "Cariage return" selected;
 Type $$ and type Enter (or click Send) in sending bar of the monitor.
 More info about this here : https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration
+
+Limit switches normally-closed (NC) added, therefore $5=1 .
