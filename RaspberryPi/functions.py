@@ -101,13 +101,11 @@ def camera_control(
         # if everything goes fine
         # Flush startup text in serial input:
         s.flushInput()
-        # To activate once the end stops are installed on the stage:
-        # s.write(b'$H')
         # if everything goes fine
         # Flush startup text in serial input:
         s.flushInput()
         # To activate once the end stops are installed on the stage:
-        # s.write(b'$H')
+        s.write(b'$H')
         s.write(b"G90 \n")
         camera = PiCamera()
         camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
