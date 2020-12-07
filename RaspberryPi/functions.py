@@ -10,6 +10,7 @@ import os
 from picamera import PiCamera
 import config as con
 from itertools import product
+import RPi.GPIO as GPIO
 
 
 # Function 1:
@@ -80,6 +81,10 @@ def camera_control(
     """Starts a serial communication with the Arduino board and the CNC shield,
     starts the camera and make it move above every well of every box
     with a zigzag pattern"""
+    relay = 16
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(relay, GPIO.OUT)
+    GPIO.output(relay, False)
     # Time when loops start:
     starting_loops = np.arange(
         0, con.info["total_duration"] + 1, con.info["elapse_time"]
@@ -117,6 +122,8 @@ def camera_control(
                 while (int(step_time) - int(start)) != int(start_loop):
                     time.sleep(0.5)
                     step_time = round(time.time())
+            GPIO.output(relay, True)
+            time.sleep(1)
             for it1, it2 in product(range(nb_box), range(nb_well)):
                 x_mv = str(well_coord[0, it2] + box_coord[0, it1]).encode()
                 y_mv = str(well_coord[1, it2] + box_coord[1, it1]).encode()
@@ -124,4 +131,6 @@ def camera_control(
                 im_path = f"images/image{it0+1:04d}_box{it1+1:04d}_well{it2+1:04d}.jpg"
                 camera.capture(im_path)
                 time.sleep(cam_set["delay_for_picture"])
+            GPIO.output(relay, False)
         camera.stop_preview()
+        GPIO.cleanup()
