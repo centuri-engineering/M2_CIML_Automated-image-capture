@@ -5,6 +5,9 @@ File containing the main constants to be modified.
 # General information, time in seconds
 info = {"total_duration": 400, "elapse_time": 200, "delay_for_picture": 1}
 
+# Information about the position of the 1 well to the homing position:
+pos = {"x0": 50, "y0": 50}
+
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 box = {
     "nb_well_along_X": 6,

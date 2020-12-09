@@ -69,7 +69,6 @@ def box_scanning_zigzag(box_array=con.box_array, box=con.box):
     box_coord_zigzag = np.concatenate((Xboxcoord_zigzag_box, Yboxcoord_zigzag_box))
     return box_coord_zigzag
 
-
 def camera_control(
     well_coord,
     box_coord,
@@ -77,10 +76,19 @@ def camera_control(
     box_array=con.box_array,
     ser_set=con.ser_set,
     cam_set=con.cam_set,
+    pos=con.pos,
 ):
     """Starts a serial communication with the Arduino board and the CNC shield,
     starts the camera and make it move above every well of every box
     with a zigzag pattern"""
+    max_rate_min = 8000
+    max_rate_s = max_rate_min/60
+    max_acc = 500
+    #Considering acceleration and deceleration phases (hence *2):
+    time_acc = (max_rate_s/max_acc)*2
+    dist_acc = max_rate_s*time_acc
+    print(dist_acc)
+
     relay = 16
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(relay, GPIO.OUT)
@@ -101,12 +109,28 @@ def camera_control(
         # if everything goes fine
         # Flush startup text in serial input:
         s.flushInput()
-        # if everything goes fine
-        # Flush startup text in serial input:
-        s.flushInput()
-        # To activate once the end stops are installed on the stage:
-        s.write(b'$H')
-        s.write(b"G90 \n")
+        # starts homing:
+        s.write(b'$h\r\n')
+        while (s.readline() != b'ok\r\n'):
+            print("Homing error")
+            pass
+
+        s.write(b'G0 X' + str(pos["x0"]).encode() + b' Y' + str(pos["y0"]).encode() + b'\r\n')
+        while (s.readline() != b'ok\r\n'):
+            print("Setting new position error after homing")
+            pass
+
+        straight_travel = (((pos["x0"]**2)+(pos["y0"]**2))**0.5)
+        if straight_travel < dist_acc:
+            time.sleep(time_acc+cam_set["delay_for_picture"])
+        else :
+            time.sleep(time_acc+(straight_travel-dist_acc)/max_rate_s+cam_set["delay_for_picture"])
+
+        # Sets the new position as the new homing point:
+        s.write(b"G92 Y0 X0 Z0\r\n")
+        while (s.readline() != b'ok\r\n'):
+            print("Setting absolute positionning error after new position")
+            pass
         camera = PiCamera()
         camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
         start = round(time.time())
@@ -122,13 +146,23 @@ def camera_control(
                     step_time = round(time.time())
             GPIO.output(relay, True)
             time.sleep(1)
+            prev_x_mv = 0
+            prev_y_mv = 0
             for it1, it2 in product(range(nb_box), range(nb_well)):
                 x_mv = str(well_coord[0, it2] + box_coord[0, it1]).encode()
                 y_mv = str(well_coord[1, it2] + box_coord[1, it1]).encode()
-                s.write(b"G0 X" + x_mv + b" Y" + y_mv + b"\n")
+                s.write(b"G0 X" + x_mv + b" Y" + y_mv + b"\r\n")
+                while (s.readline() != b'ok\r\n'):
+                    pass
+                straight_travel = ((((float(x_mv)-float(prev_x_mv))**2)+((float(y_mv)-float(prev_y_mv))**2))**0.5)
+                if straight_travel < dist_acc:
+                    time.sleep(time_acc+cam_set["delay_for_picture"])
+                else :
+                    time.sleep(time_acc+(straight_travel-dist_acc)/max_rate_s+cam_set["delay_for_picture"])
+                prev_x_mv = x_mv
+                prev_y_mv = y_mv
                 im_path = f"images/image{it0+1:04d}_box{it1+1:04d}_well{it2+1:04d}.jpg"
                 camera.capture(im_path)
-                time.sleep(cam_set["delay_for_picture"])
             GPIO.output(relay, False)
         camera.stop_preview()
         GPIO.cleanup()
