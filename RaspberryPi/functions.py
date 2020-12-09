@@ -87,7 +87,6 @@ def camera_control(
     #Considering acceleration and deceleration phases (hence *2):
     time_acc = (max_rate_s/max_acc)*2
     dist_acc = max_rate_s*time_acc
-    print(dist_acc)
 
     relay = 16
     GPIO.setmode(GPIO.BOARD)
