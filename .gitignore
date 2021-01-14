@@ -2,6 +2,8 @@ Automatized_camera
 .vscode/
 info.txt
 drawing.svg
+CAD_files/
+CNC_cutting/
 #Exclude all folder
 RaspberryPi/*
 #Except
