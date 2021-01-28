@@ -3,8 +3,12 @@ Automatized_camera
 info.txt
 drawing.svg
 #Exclude all folder
+images/
 RaspberryPi/*
 #Except
+!RaspberryPi/ui_tk.py
+!RaspberryPi/scanner.py
+!RaspberryPi/cli.py
 !RaspberryPi/functions.py
 !RaspberryPi/main.py
 !RaspberryPi/config.py
