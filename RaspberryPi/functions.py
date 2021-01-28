@@ -13,6 +13,7 @@ import RPi.GPIO as GPIO
 import argparse
 import datetime
 
+
 def well_scan(con, zigzag):
 
     """Creates a pattern to place the camera above each well,
@@ -264,7 +265,9 @@ def hms_to_sec(t):
     h, m, s = [int(i) for i in t.split(":")]
     return 3600 * h + 60 * m + s
 
+
 def arg_def(conf, fun):
+    """Adds arguments when lauching the program """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--box",
@@ -292,11 +295,10 @@ def arg_def(conf, fun):
     elif args.box == 12:
         conf.box = conf.box_12wells
 
-    conf.box_array["nb_box_along_X"] = 1
-    conf.box_array["nb_box_along_Y"] = 1
-
     print("Box type (nb of wells) : " + str(args.box))
-    print("Delay (d, hh:mm:ss) : " + str(datetime.timedelta(seconds=conf.info["delay"])))
+    print(
+        "Delay (d, hh:mm:ss) : " + str(datetime.timedelta(seconds=conf.info["delay"]))
+    )
     print(
         "Total duration (d, hh:mm:ss) : "
         + str(datetime.timedelta(seconds=conf.info["total_duration"]))
