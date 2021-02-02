@@ -45,21 +45,29 @@ class Scanner:
 
     def scan_photo(self):
         """ Scan with taking pictures"""
-        camera = PiCamera()
-        camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
-        if not os.path.exists("images/"):
-            os.makedirs("images/")
-        with self.serial as s:
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(self.relay_light, GPIO.OUT)
-            GPIO.output(self.relay_light, True)
-            self.fun.scan(
-                s,
-                self.well_coord,
-                self.box_coord,
-                self.conf,
-                self.relay_light,
-                action=camera.capture,
-            )
+        try:
+            camera = PiCamera()
+            camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
+            camera.shutter_speed = 30000
+
+            if not os.path.exists("images/"):
+                os.makedirs("images/")
+            with self.serial as s:
+                GPIO.setmode(GPIO.BOARD)
+                GPIO.setup(self.relay_light, GPIO.OUT)
+                GPIO.output(self.relay_light, True)
+                print(camera.exposure_speed)
+                self.fun.scan(
+                    s,
+                    self.well_coord,
+                    self.box_coord,
+                    self.conf,
+                    self.relay_light,
+                    action=camera.capture,
+                )
+                GPIO.cleanup()
+            camera.stop_preview()
+        except KeyboardInterrupt:
+            print("Scan interrupted by typing ctrl+c on the keybpard.")
+        finally:
             GPIO.cleanup()
-        camera.stop_preview()

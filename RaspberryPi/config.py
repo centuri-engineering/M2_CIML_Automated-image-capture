@@ -23,6 +23,7 @@ pos = {"x0": 20, "y0": 0}
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 # default box
 box = {
+    "name": "default 12 wells",
     "nb_well_along_X": 4,
     "nb_well_along_Y": 3,
     "dist_inter_well": 3.3,
@@ -32,6 +33,7 @@ box = {
 }
 
 box_12wells = {
+    "name": "12 wells",
     "nb_well_along_X": 4,
     "nb_well_along_Y": 3,
     "dist_inter_well": 3.3,
@@ -41,6 +43,7 @@ box_12wells = {
 }
 
 box_6wells = {
+    "name": "6 wells",
     "nb_well_along_X": 3,
     "nb_well_along_Y": 2,
     "dist_inter_well": 3.6,

@@ -1,7 +1,6 @@
 Automatized_camera
 .vscode/
 info.txt
-drawing.svg
 #Exclude all folder
 images/
 RaspberryPi/*

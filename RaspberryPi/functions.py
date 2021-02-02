@@ -5,12 +5,9 @@ File containing the main functions.
 import time
 import numpy as np
 import os
-from picamera import PiCamera
 from itertools import product
 import sys
-from picamera import PiCamera
 import RPi.GPIO as GPIO
-import argparse
 import datetime
 
 
@@ -257,49 +254,10 @@ def scan(
                     im_path = f"images/image{it0+1:04d}_box{it1+1:04d}-loop{it2+1:04d}_well{it3+1:04d}-loop{it4+1:04d}.jpg"
                     action(im_path, *action_args, **action_kwargs)
         if relay is not None:
-            GPIO.output(relay, False)
+            GPIO.output(relay, True)
 
 
 def hms_to_sec(t):
     """Displays hh:mm:ss format to seconds """
     h, m, s = [int(i) for i in t.split(":")]
     return 3600 * h + 60 * m + s
-
-
-def arg_def(conf, fun):
-    """Adds arguments when lauching the program """
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--box",
-        type=int,
-        choices=[6, 12],
-        help="defines the number of wells for the boxes used",
-    )
-    parser.add_argument(
-        "--delay", type=str, help="defines the delay (format hh:mm:ss) after each photo"
-    )
-    parser.add_argument(
-        "--duration",
-        type=str,
-        help="defines the total duration during which photos are taken (format hh:mm:ss)",
-    )
-    args = parser.parse_args()
-    if args.delay is not None:
-        delay = fun.hms_to_sec(args.delay)
-        conf.info["delay"] = delay
-    if args.duration is not None:
-        tot_dur = fun.hms_to_sec(args.duration)
-        conf.info["total_duration"] = tot_dur
-    if args.box == 6:
-        conf.box = conf.box_6wells
-    elif args.box == 12:
-        conf.box = conf.box_12wells
-
-    print("Box type (nb of wells) : " + str(args.box))
-    print(
-        "Delay (d, hh:mm:ss) : " + str(datetime.timedelta(seconds=conf.info["delay"]))
-    )
-    print(
-        "Total duration (d, hh:mm:ss) : "
-        + str(datetime.timedelta(seconds=conf.info["total_duration"]))
-    )
