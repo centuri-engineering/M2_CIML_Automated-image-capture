@@ -4,7 +4,6 @@ info.txt
 CAD_files/
 CNC_cutting/
 #Exclude all folder
-images/
 RaspberryPi/*
 #Except
 !RaspberryPi/ui_tk.py

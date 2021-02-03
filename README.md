@@ -11,22 +11,7 @@ Create a plexiglass enclosure to control the environment (humidity, temperature)
 Optimize the imaging instrument, to obtain higher quality images.</em>
   
 ## How it works
-This code aims to track worms (*C.Elegans*) in 24 wells plates, placed inside a CNC router frame. The plates are fixed, and the camera move above/below (depending on the preferences) each well to take a picture. This is repeated n times.
-
-## How to start the code
-The double click on <span>main.py</span> (located in M2_CIML_Automated-image-capture/RaspberryiPi/). On the RaspberryPi board the file should open in a IDE such as *thonny*. Then click the green arrow to start the code.
-
-## How to change parameters
-If you wish to change some parameters, open the <span>config.py</span> file and change them as needed. 
-
-## Quick explanantion of the code
-The code is subdivided into 3 main files:
-* <span>config.py</span>, containing the main parameters that can be modify;
-* <span>functions.py</span>, containing 3 functions to control the camera. 
-    * *well_scanning_zigzag* : a function to scan all wells of 24 well plates. The path is visible in <span style="color:orange">orange</span> on the figure below;
-    * *box_scanning_zigzag* : a function to scan all boxes placed on the router. The path is visible in <span style="color:blue">blue</span> on the figure below;
-    * *camera_control* : a function that starts the serial communication with the Arduino board, and control the camera according the X and Y coordinates obtained from the previous functions. The resulting path is visible on the figure below in <span style="color:green">green</span>.
-* <span>main.py</span>
+This program aims to track worms (*C.Elegans*) in wells plates, placed inside a CNC router frame. The plates are fixed, and the camera move above/below (depending on the preferences) each well to take a picture. This is repeated n times.
 
 ## Command Line Interface (CLI), and how to use it
 The file is refered as cli.py in the RaspberryPi folder.  
@@ -45,6 +30,10 @@ Steps:
         * *Example to set a 24 hours long experiment: ```python cli.py --duration 24:00:00```
     * *Example to set an experiment with 6 wells boxes, with 40 minutes delay, and a total duration of 36 hours: ```python cli.py --box 6 --delay 00:40:00 --duration 36:00:00```.
 * Once you type *Enter* a resume of the selected parameters appears. You can type *y* (for yes) if you want to run the scan with the selected parameters. Or type *n* (for no) to abort the scan.
+* To cancel a scan, hold *ctrl+c*.
+
+## Electronics
+![scheme](images/electronics.png)
 
 ## Yet to do
 * ~~Placing the end stops on the frame, on each axis;~~
