@@ -1,12 +1,8 @@
 Automatized_camera
 .vscode/
 info.txt
-<<<<<<< HEAD
-drawing.svg
 CAD_files/
 CNC_cutting/
-=======
->>>>>>> e2a23df4e75d78e20e21b020053823016415c886
 #Exclude all folder
 images/
 RaspberryPi/*
