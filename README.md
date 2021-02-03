@@ -28,7 +28,11 @@ The code is subdivided into 3 main files:
 * <span>main.py</span>
 
 ## Yet to do
-* Placing the end stops on the frame, on each axis;
-* Defining the bottom left well as the zero position.
-* Etc.
+* ~~Placing the end stops on the frame, on each axis;~~
+* ~~Defining the bottom left well as the zero position.~~
+* Move arg_def(from functions.py) into cli.py
+* Write a small user guide for the cli into readme
+* Update the scheme below with the current path
+* Make a scheme for electronics
+* Add the config.h file with modification for grbl
 ![scheme](images/scheme.png)
