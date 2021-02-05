@@ -33,7 +33,7 @@ Steps:
 * To cancel a scan, hold *ctrl+c*.
 
 ## Electronics
-![scheme](images/electronics.png)
+![scheme](drawings/electronics.png)
 Make sure the stepper motors are correctly plugged to the CNC shield. Help here : https://www.youtube.com/watch?v=bR3853iNaW8. *Use a LED plugged into the stepper motor wires, and check when it lights up. Connect the 2 pins that were used to light the LED beside each other on the CNC shield A4988 driver. For example on 1B and 1A. Then check that the 2 other pins make the LED to light up, and connect them to the other A4988 pin 2A and 2B. Considering A4988 pins to be 1B-1A-2B-2A.*
 
 ## XY stage (different size)
