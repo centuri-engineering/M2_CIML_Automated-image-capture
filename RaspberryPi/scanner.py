@@ -46,9 +46,10 @@ class Scanner:
     def scan_photo(self):
         """ Scan with taking pictures"""
         try:
-            camera = PiCamera()
+            camera = PiCamera(resolution=(4056, 3040))  # resolution=(2592, 1944)
+            camera.hflip = True
             camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
-            camera.shutter_speed = 30000
+            camera.shutter_speed = 30000  # to avoid blinking
 
             if not os.path.exists("images/"):
                 os.makedirs("images/")
@@ -56,7 +57,6 @@ class Scanner:
                 GPIO.setmode(GPIO.BOARD)
                 GPIO.setup(self.relay_light, GPIO.OUT)
                 GPIO.output(self.relay_light, True)
-                print(camera.exposure_speed)
                 self.fun.scan(
                     s,
                     self.well_coord,

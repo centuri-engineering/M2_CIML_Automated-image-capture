@@ -1,4 +1,4 @@
-![scheme](images/logo.png)
+![scheme](drawings/logo.png)
 # M2_CIML_Automated-image-capture  
 ## Project abstract
 Applicant: Jérôme Belougne  
@@ -46,7 +46,15 @@ Steps:
     * *Example to set an experiment with 6 wells boxes, with 40 minutes delay, and a total duration of 36 hours: ```python cli.py --box 6 --delay 00:40:00 --duration 36:00:00```.
 * Once you type *Enter* a resume of the selected parameters appears. You can type *y* (for yes) if you want to run the scan with the selected parameters. Or type *n* (for no) to abort the scan.
 
+## Issues
+* To be able to take picture at a maximal resolution:
+    * ```sudo raspi-config``` > Performance Options > GPU memory > 256
+
 ## Yet to do
+* Add STOP button
+* Add 2 new endstops at the end of the axis
+* Add a filter for the endstops
+* config.py to json
 * ~~Placing the end stops on the frame, on each axis;~~
 * ~~Defining the bottom left well as the zero position.~~
 * ~~Move arg_def(from functions.py) into cli.py~~
@@ -54,4 +62,4 @@ Steps:
 * Update the scheme below with the current path
 * Make a scheme for electronics
 * ~~Add the config.h file with modification for grbl~~
-![scheme](images/scheme.png)
+![scheme](drawings/scheme.png)
