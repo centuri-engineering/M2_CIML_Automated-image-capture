@@ -34,6 +34,37 @@ Steps:
 
 ## Electronics
 ![scheme](images/electronics.png)
+Make sure the stepper motors are correctly plugged to the CNC shield. Help here : https://www.youtube.com/watch?v=bR3853iNaW8. *Use a LED plugged into the stepper motor wires, and check when it lights up. Connect the 2 pins that were used to light the LED beside each other on the CNC shield A4988 driver. For example on 1B and 1A. Then check that the 2 other pins make the LED to light up, and connect them to the other A4988 pin 2A and 2B. Considering A4988 pins to be 1B-1A-2B-2A.*
+
+## XY stage (different size)
+* Setepper motor : 42BYGH34H-2A-23D (Nema 17 2A ?)
+* GT2-20 – Poulie 20 dents en Aluminium, pour axe de 5mm (3 x) - 4.8€
+    * https://diydomo.com/boutique/impression-3d/mecanique/2gt-20-poulie-20-dents-en-aluminium-pour-axe-de-5mm/
+* Courroie GT2 6mm de large pas de 2mm au mètre () - 2,95€
+    * https://diydomo.com/boutique/impression-3d/mecanique/courroie-gt2-6mm-de-large-pas-de-2mm-au-metre/
+* Interrupteur Inverseur fin de course 1A 125VAC pour imprimante 3D (4 x) - 2.4€
+    * https://diydomo.com/boutique/impression-3d/electronique/interrupteur-inverseur-fin-de-course-1a-125vac-pour-imprimante-3d/
+* Profile aluminium 30x60 B-type rainure 8 (2 x 500 mm) - 12.18€
+    * https://www.motedis.fr/shop/Profile-a-rainures/Profile-30-B-Type-rainure-8/Profile-aluminium-30x60-B-Typ-rainure-8::99999436.html
+* Profilé aluminium 30x30 B-Typ rainure 8 (2 x 500 mm) - 5.24€
+    * https://www.motedis.fr/shop/Profile-a-rainures/Profile-30-B-Type-rainure-8/Profile-aluminium-30x30-B-Typ-rainure-8::99999432.html
+* Profilé aluminium 30x60 B-Typ rainure 8 (1 x 484 mm) - 6,44 €
+    * https://www.motedis.fr/shop/Profile-a-rainures/Profile-30-B-Type-rainure-8/Profile-aluminium-30x60-B-Typ-rainure-8::99999436.html
+* Équerre d'assemblage 30 B-Typ (4 x avec jeu de fixation) - 6,0145 €
+    * https://www.motedis.fr/shop/Profile-accessoires/Bracket-for-Aluminium-profiles/Equerre-dassemblage-30-B-Typ::999991057.html
+* Ecrous à tête marteau R8 B-Typ [M6] (1 x 50 pcs) - 7,2639 €
+    * https://www.motedis.fr/shop/Profile-accessoires/Dans-la-rainure/Ecrous-a-tete-marteau-R8-B-Typ-M6::999994215.html
+* Roue caoutchouc Creality3D CR-10S PRO (12 x ) - 30.36 €
+    * https://www.makershop.fr/pieces-detachees/3046-roue-caoutchouc-cr-10s-pro.html?search_query=roue&results=25
+    * https://www.conrad.fr/p/roulement-a-billes-radial-ubc-bearing-625-2z-5-mm-exterieur-16-mm-regime-max-36000-trmin-198818
+* Vis
+    * pour stepper (x 12): M3, 12 mm
+    * pour attacher les courroies (x 6): M6, 12 mm
+    * pour filetage du profilé (x 16) : M8, 12 mm
+    * pour attacher le moteur de l'axe Y (x 4) : M5, 50 mm
+    * pour attacher les roues de l'axe X (x 8) : M5, 30 mm
+
+
 
 ## Yet to do
 * ~~Placing the end stops on the frame, on each axis;~~
