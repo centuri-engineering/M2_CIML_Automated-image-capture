@@ -1,4 +1,4 @@
-![scheme](images/logo.png)
+![scheme](drawings/logo.png)
 # M2_CIML_Automated-image-capture  
 ## Project abstract
 Applicant: Jérôme Belougne  
@@ -66,7 +66,15 @@ Make sure the stepper motors are correctly plugged to the CNC shield. Help here 
 
 
 
+## Issues
+* To be able to take picture at a maximal resolution:
+    * ```sudo raspi-config``` > Performance Options > GPU memory > 256
+
 ## Yet to do
+* Add STOP button
+* Add 2 new endstops at the end of the axis
+* Add a filter for the endstops
+* config.py to json
 * ~~Placing the end stops on the frame, on each axis;~~
 * ~~Defining the bottom left well as the zero position.~~
 * ~~Move arg_def(from functions.py) into cli.py~~
@@ -74,4 +82,4 @@ Make sure the stepper motors are correctly plugged to the CNC shield. Help here 
 * Update the scheme below with the current path
 * Make a scheme for electronics
 * ~~Add the config.h file with modification for grbl~~
-![scheme](images/scheme.png)
+![scheme](drawings/scheme.png)

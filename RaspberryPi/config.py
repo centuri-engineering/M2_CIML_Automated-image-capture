@@ -18,7 +18,7 @@ info = {
 }
 
 # Information about the position of the 1 well to the homing position:
-pos = {"x0": 20, "y0": 0}
+pos = {"x0": 22.6, "y0": 0.6}
 
 # Individual Petri dish information (box), dimensions (dist, diam) in mm
 # default box
