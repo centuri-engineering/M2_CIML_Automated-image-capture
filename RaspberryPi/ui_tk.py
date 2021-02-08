@@ -12,10 +12,17 @@ from tkinter.ttk import *
 from picamera import PiCamera
 import RPi.GPIO as GPIO
 from PIL import Image
+import time
 
 
 # Main program:
 with serial.Serial(con.ser_set["board_path"], con.ser_set["baudrate"]) as s:
+
+    relay_light = 16
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(relay_light, GPIO.OUT)
+    flag = False
+
     fun.homing(s, con)
 
     window = Tk()
@@ -96,12 +103,34 @@ with serial.Serial(con.ser_set["board_path"], con.ser_set["baudrate"]) as s:
     #     rad2.grid(column=1, row=1, sticky=W)
     rad1.place(x=10, y=30)
     rad2.place(x=200, y=30)
-    rad_o1.place(x=400, y=30)
-    rad_o2.place(x=600, y=30)
+    rad_o1.place(x=10, y=60)
+    rad_o2.place(x=200, y=60)
+
+    def capture():
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        camera.capture("RaspberryPi/images/" + timestr + ".jpg")
+
+    btn_capt = Button(window, text="Capture", command=capture)
+    # btn.grid(column=0, row=5)
+    btn_capt.place(x=10, y=90)
+
+    # def dalight():
+    #     print(flag)
+    #     if flag == True:
+    #         GPIO.output(relay_light, False)
+    #     else:
+    #         GPIO.output(relay_light, True)
+    #     flag = not flag
+    #     print(flag)
+    #     return flag
+
+    # btn_light = Button(window, text="Light", command=dalight())
+    # # btn.grid(column=0, row=5)
+    # btn_light.place(x=10, y=120)
 
     lbl2 = Label(window, text="Steps : ")
     # lbl2.grid(column=0, row=2, sticky=W, padx=20)
-    lbl2.place(x=10, y=100)
+    lbl2.place(x=10, y=200)
 
     var2 = DoubleVar()
     var2.set(0)
@@ -111,9 +140,9 @@ with serial.Serial(con.ser_set["board_path"], con.ser_set["baudrate"]) as s:
     #     rad3.grid(column=0, row=3, sticky=W, padx=20)
     #     rad4.grid(column=1, row=3, sticky=W)
     #     rad5.grid(column=2, row=3, sticky=W)
-    rad3.place(x=10, y=130)
-    rad4.place(x=110, y=130)
-    rad5.place(x=210, y=130)
+    rad3.place(x=10, y=230)
+    rad4.place(x=110, y=230)
+    rad5.place(x=210, y=230)
 
     #
     #     lbl2 = Label(window, text="\nMotor steps, currently not set.")
@@ -142,7 +171,7 @@ with serial.Serial(con.ser_set["board_path"], con.ser_set["baudrate"]) as s:
 
     lbl3 = Label(window, text="\nMove the camera:")
     # lbl3.grid(column=0, row=4, sticky=W, padx=20)
-    lbl3.place(x=10, y=200)
+    lbl3.place(x=10, y=300)
 
     xpos = DoubleVar()
     xpos.set(0)
@@ -207,20 +236,20 @@ with serial.Serial(con.ser_set["board_path"], con.ser_set["baudrate"]) as s:
 
     btn = Button(window, text="Left", command=left)
     # btn.grid(column=0, row=5)
-    btn.place(x=10, y=250)
+    btn.place(x=10, y=340)
     btn2 = Button(window, text="Right", command=right)
     # btn2.grid(column=0, row=6)
-    btn2.place(x=100, y=250)
+    btn2.place(x=100, y=340)
     btn3 = Button(window, text="Up", command=up)
     # btn3.grid(column=0, row=7)
-    btn3.place(x=10, y=300)
+    btn3.place(x=10, y=370)
     btn4 = Button(window, text="Down", command=down)
     # btn4.grid(column=0, row=8)
-    btn4.place(x=100, y=300)
+    btn4.place(x=100, y=370)
 
     lbl4 = Label(window, text="\nCurrent position: ")
     # lbl4.grid(column=0, row=9, sticky=W, padx=20)
-    lbl4.place(x=10, y=450)
+    lbl4.place(x=10, y=400)
 
     window.mainloop()
 

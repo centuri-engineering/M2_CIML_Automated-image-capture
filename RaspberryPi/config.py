@@ -3,9 +3,9 @@ File containing the main constants to be modified.
 """
 import functions as fun
 
-total_duration = "8:00:00"
+total_duration = "48:00:00"
 total_duration = fun.hms_to_sec(total_duration)
-delay = "00:10:00"
+delay = "00:30:00"
 delay = fun.hms_to_sec(delay)
 
 # General information, time in seconds
