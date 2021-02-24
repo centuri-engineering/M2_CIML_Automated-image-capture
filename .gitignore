@@ -1,10 +1,15 @@
 Automatized_camera
 .vscode/
 info.txt
-drawing.svg
+CAD_files/
+CNC_cutting/
 #Exclude all folder
+images/*
 RaspberryPi/*
 #Except
+!RaspberryPi/ui_tk.py
+!RaspberryPi/scanner.py
+!RaspberryPi/cli.py
 !RaspberryPi/functions.py
 !RaspberryPi/main.py
 !RaspberryPi/config.py
