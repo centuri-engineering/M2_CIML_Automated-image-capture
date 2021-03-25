@@ -2,13 +2,17 @@
 File containing the main functions.
 """
 # LIBRARIES:
-import time
-import numpy as np
-import os
-from itertools import product
 import sys
-import RPi.GPIO as GPIO
+import time
 import datetime
+from itertools import product
+
+import numpy as np
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    import Mock.GPIO as GPIO
 
 
 def well_scan(con, zigzag):

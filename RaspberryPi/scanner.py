@@ -1,10 +1,19 @@
 """ Scanner class definition """
 # libraries import
-import serial
-import RPi.GPIO as GPIO
-import time
-from picamera import PiCamera
 import os
+import time
+
+import serial
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    import Mock.GPIO as GPIO
+
+try:
+    from picamera import PiCamera
+except ImportError:
+    from mock_camera import PiCamera
 
 
 class Scanner:
