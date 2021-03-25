@@ -2,4 +2,6 @@
 info.txt
 CAD_files/
 CNC_cutting/
-__pycache__
+__pycache__*.[pyo, pyc]
+*.pyc
+*.pyo
