@@ -1,0 +1,76 @@
+#:kivy 1.0
+<CameraClick>:
+    orientation: 'horizontal'
+    Camera:
+        id: camera
+        resolution: (480, 800)
+        play: False
+    ToggleButton:
+        text: 'Preview'
+        on_press: camera.play = not camera.play
+        size_hint_y: None
+        height: '48dp'
+    Button:
+        text: 'Capture'
+        size_hint_y: None
+        height: '48dp'
+        on_press: root.capture()
+
+<ScannerWidget>:
+    size_hint_x: None
+    orientation: 'horizontal'
+    Widget:
+        size_hint_x: None
+        width: 600
+        canvas:
+            Color:
+                rgba: 0.4, 0.2, 0.7, 0.3
+            Rectangle:
+                size: 800, 600
+                pos: self.pos
+
+    BoxLayout:
+        size_hint_x: None
+        width: 200
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            height: 100
+            orientation: 'vertical'
+            Label:
+                text: "Move the Camera"
+                font_size: '20sp'
+            Label:
+                id: pos_lbl
+                text: root.head_pos_str
+            Label:
+                id: step_lbl
+                text: f"step: {10**step.value:.02f} cm"
+            Slider:
+                id: step
+                min: -1
+                max: 1
+                step: 1
+                on_value: step_lbl.text = f"step: {10**step.value:.02f} cm"
+        BoxLayout:
+            size_hint_y: None
+            height: 100
+            orientation: 'vertical'
+            Button:
+                text: 'Up'
+                on_press: root.move(0, 10**step.value)
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'Left'
+                    on_press: root.move(-10**step.value, 0)
+                Button:
+                    text: 'Right'
+                    on_press: root.move(10**step.value, 0)
+            Button:
+                text: 'Down'
+                on_press: root.move(0, -10**step.value)
+            Button:
+                text: 'Homing'
+                on_press: root.homing()
