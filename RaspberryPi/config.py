@@ -66,3 +66,6 @@ ser_set = {
     # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
     "board_path": "/dev/ttyACM0",
 }
+
+def create_config():
+    pass

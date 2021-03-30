@@ -1,10 +1,12 @@
 """ Scanner class definition """
 # libraries import
-import serial
-import RPi.GPIO as GPIO
-import time
-from picamera import PiCamera
 import os
+import time
+
+import serial
+
+import RPi.GPIO as GPIO
+from picamera import PiCamera
 
 
 class Scanner:
@@ -34,7 +36,6 @@ class Scanner:
             while len(s.readline()) == 0:
                 print("Waiting for the serial communication.")
             s.write(b"$x\r\n")
-            time.sleep(0.1)
             self.fun.serial_com_check(s, toprint=True)
             self.fun.simple_line(s, xmove, ymove)
 
@@ -43,14 +44,16 @@ class Scanner:
         with self.serial as s:
             self.fun.scan(s, self.well_coord, self.box_coord, self.conf)
 
-    def scan_photo(self):
+    def scan_photo(self, camera=None, preview=True):
         """ Scan with taking pictures"""
-        try:
-            camera = PiCamera(resolution=(4056, 3040))  # resolution=(2592, 1944)
-            camera.hflip = True
-            camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
-            camera.shutter_speed = 30000  # to avoid blinking
+        if camera is None:
+            camera = PiCamera(resolution=(2592, 1952))  # resolution=(4056, 3040)
 
+        try:
+            camera.hflip = True
+            camera.shutter_speed = 30000  # to avoid blinking
+            if preview:
+                camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
             if not os.path.exists("images/"):
                 os.makedirs("images/")
             with self.serial as s:
@@ -66,8 +69,9 @@ class Scanner:
                     action=camera.capture,
                 )
                 GPIO.cleanup()
-            camera.stop_preview()
+            if preview:
+                camera.stop_preview()
         except KeyboardInterrupt:
-            print("Scan interrupted by typing ctrl+c on the keybpard.")
+            print("Scan interrupted by typing ctrl+c on the keybpad.")
         finally:
             GPIO.cleanup()

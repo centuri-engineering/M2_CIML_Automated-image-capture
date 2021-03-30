@@ -2,13 +2,14 @@
 File containing the main functions.
 """
 # LIBRARIES:
-import time
-import numpy as np
-import os
-from itertools import product
 import sys
-import RPi.GPIO as GPIO
+import time
 import datetime
+from itertools import product
+
+import numpy as np
+
+import RPi.GPIO as GPIO
 
 
 def well_scan(con, zigzag):
@@ -88,7 +89,6 @@ def box_scan(con, zigzag):
 def serial_com_check(s, toprint=True):
     """Function to read the receceived data from grbl """
     # Wait for the data to be received
-    time.sleep(0.1)
     while s.in_waiting != 0:
         theline = s.readline()
         if toprint == True:

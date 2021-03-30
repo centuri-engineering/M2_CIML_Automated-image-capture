@@ -5,9 +5,7 @@ future==0.18.2
 gi==1.2
 idna==2.10
 iso8601==0.1.13
-Kivy==2.0.0
-Kivy-examples==2.0.0
-Kivy-Garden==0.1.4
+Kivy==1.11.1
 numpy==1.19.5
 opencv-python==4.5.1.48
 picamera==1.13
