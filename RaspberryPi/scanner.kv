@@ -2,29 +2,30 @@
 <CameraClick>:
     orientation: 'vertical'
     id: cameraclick
-    Camera:
-        id: camera
-        resolution: (800, 608)
-        play: False
-	
-    ToggleButton:
-        text: 'Preview'
-        on_press: camera.play = not camera.play
-        size_hint_y: None
-        height: '48dp'
-    Button:
-        text: 'Capture'
-        size_hint_y: None
-        height: '48dp'
-        on_press: root.capture()
 
 <ScannerWidget>:
     size_hint_x: None
     orientation: 'horizontal'
-    CameraClick:
-        id: cameraclick
+    BoxLayout:
         size_hint_x: None
         width: 600
+        orientation: 'vertical'
+        Camera:
+            id: camera
+            resolution: (800, 608)
+            size_hint_x: None
+            width: 600
+            play: False
+        ToggleButton:
+            text: 'Preview'
+            on_press: camera.play = not camera.play
+            size_hint_y: None
+            height: '48dp'
+        Button:
+            text: 'Capture'
+            size_hint_y: None
+            height: '48dp'
+            on_press: root.capture()
     BoxLayout:
         size_hint_x: None
         width: 200
@@ -32,7 +33,7 @@
 
         BoxLayout:
             size_hint_y: None
-            height: 100
+            height: 150
             orientation: 'vertical'
             Button:
                 text: 'Scan'
@@ -54,7 +55,7 @@
                 on_value: step_lbl.text = f"step: {10**step.value:.02f} cm"
         BoxLayout:
             size_hint_y: None
-            height: 100
+            height: 150
             orientation: 'vertical'
             Button:
                 text: 'Up'
