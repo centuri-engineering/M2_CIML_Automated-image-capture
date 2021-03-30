@@ -3,7 +3,7 @@
 ## Project abstract
 Applicant: Jérôme Belougne  
 Institute: CIML  
-Engineer: Mathias Lechelon  
+Engineer: Mathias Lechelon & Guillaume Gay
 Submission date: 15/07/2020  
 Summary : <em>Optimize the automation of the image capture already present ( DMS300 / Workstation Tecan gemini).
 The aim of the optimization will be to replace the currently used automaton with an X-Y automated platform system.
@@ -12,6 +12,13 @@ Optimize the imaging instrument, to obtain higher quality images.</em>
   
 ## How it works
 This program aims to track worms (*C.Elegans*) in wells plates, placed inside a CNC router frame. The plates are fixed, and the camera move above/below (depending on the preferences) each well to take a picture. This is repeated n times.
+
+## Install
+1. Compile Grbl source code and upload it to an Arduino board. More details here : https://github.com/gnea/grbl/wiki
+2. Change the *config.h* file as described in *Arduino->config_modif.md*.
+3. To maximize stepper performance, make sure to set the correct current limit. Read *current limiting* : https://www.pololu.com/product/1182 
+4. Add the jumpers to the CNC shield for the desired microstepping : here 3 jumpers, on selector input MS1, MS2 and MS3 (for each driver).
+5. Make sure the stepper motors are correctly plugged to the CNC shield. Help here : https://www.youtube.com/watch?v=bR3853iNaW8. *Use a LED plugged into the stepper motor wires, and check when it lights up. Connect the 2 pins that were used to light the LED beside each other on the CNC shield A4988 driver. For example on 1B and 1A. Then check that the 2 other pins make the LED to light up, and connect them to the other A4988 pin 2A and 2B. Considering A4988 pins to be 1B-1A-2B-2A.*
 
 ## Command Line Interface (CLI), and how to use it
 The file is refered as cli.py in the RaspberryPi folder.  
