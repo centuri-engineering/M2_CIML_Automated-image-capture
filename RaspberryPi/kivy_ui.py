@@ -19,36 +19,23 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 
 from scanner import Scanner
+from config import Config
 import config as conf
-import functions as fun
 
 kivy.require("1.11.1")
 
 
-class CameraClick(BoxLayout):
-    def capture(self):
-        """
-        Function to capture the images and give them the names
-        according to their captured time and date.
-        """
-        camera = self.ids["camera"]
-        timestr = time.strftime("%Y%m%d_%H%M%S")
-        
-        # camera.export_to_png("IMG_{}.png".format(timestr))
-        print("Captured")
-
-
 class ScannerWidget(BoxLayout):
     head_pos = (0, 0)
-    scanner = Scanner(conf, fun)
-    
+    conf = Config()
+    scanner = Scanner(conf)
+
     @property
     def head_pos_str(self):
         return f"current position: x: {self.head_pos[0]}, y: {self.head_pos[1]}"
 
     def scan(self):
-        camera_widget = self.ids["cameraclick"]
-        camera = camera_widget.ids["camera"]
+        camera = self.ids["camera"]
         picamera = camera._camera._camera
         self.scanner.scan_photo(picamera, preview=False)
         print("scanning")
@@ -59,12 +46,18 @@ class ScannerWidget(BoxLayout):
         self.ids["pos_lbl"].text = self.head_pos_str
         print(f"moving {dx}, {dy}")
         self.scanner.simple_line(dx, dy)
-        
+
     def homing(self):
         self.head_pos = 0, 0
         self.ids["pos_lbl"].text = self.head_pos_str
         print(f"homing")
         self.scanner.homing()
+
+    def capture(self):
+        camera = self.ids["camera"]
+        picamera = camera._camera._camera
+        self.scanner.capture(picamera)
+
 
 class ScannerApp(App):
     def build(self):

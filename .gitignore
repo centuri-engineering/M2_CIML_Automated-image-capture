@@ -5,3 +5,4 @@ CNC_cutting/
 __pycache__*.[pyo, pyc]
 *.pyc
 *.pyo
+*.*~

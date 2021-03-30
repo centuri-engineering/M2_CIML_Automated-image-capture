@@ -6,7 +6,7 @@ import sys
 import time
 import datetime
 from itertools import product
-
+from pathlib import Path
 import numpy as np
 
 import RPi.GPIO as GPIO
@@ -139,12 +139,17 @@ def scan(
     well_coord,
     box_coord,
     con,
+    img_dir=None,
     relay=None,
     action=None,
     action_args=None,
     action_kwargs=None,
 ):
     """Simple scan of the well and box."""
+    if img_dir is None:
+        img_dir = Path("images")
+    else:
+        img_dir = Path(img_dir)
 
     if action_args is None:
         action_args = ()
@@ -251,7 +256,10 @@ def scan(
                 prev_x_mv = x_mv
                 prev_y_mv = y_mv
                 if action is not None:
-                    im_path = f"images/image{it0+1:04d}_box{it1+1:04d}-loop{it2+1:04d}_well{it3+1:04d}-loop{it4+1:04d}.jpg"
+                    im_path = (
+                        img_dir
+                        / f"image{it0+1:04d}_box{it1+1:04d}-loop{it2+1:04d}_well{it3+1:04d}-loop{it4+1:04d}.jpg"
+                    )
                     action(im_path, *action_args, **action_kwargs)
         if relay is not None:
             GPIO.output(relay, True)
