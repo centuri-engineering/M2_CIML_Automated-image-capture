@@ -9,10 +9,7 @@ from itertools import product
 
 import numpy as np
 
-try:
-    import RPi.GPIO as GPIO
-except ImportError:
-    import Mock.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
 def well_scan(con, zigzag):
@@ -92,7 +89,6 @@ def box_scan(con, zigzag):
 def serial_com_check(s, toprint=True):
     """Function to read the receceived data from grbl """
     # Wait for the data to be received
-    time.sleep(0.1)
     while s.in_waiting != 0:
         theline = s.readline()
         if toprint == True:

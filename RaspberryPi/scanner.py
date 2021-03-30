@@ -5,15 +5,8 @@ import time
 
 import serial
 
-try:
-    import RPi.GPIO as GPIO
-except ImportError:
-    import Mock.GPIO as GPIO
-
-try:
-    from picamera import PiCamera
-except ImportError:
-    from mock_camera import PiCamera
+import RPi.GPIO as GPIO
+from picamera import PiCamera
 
 
 class Scanner:
@@ -43,7 +36,6 @@ class Scanner:
             while len(s.readline()) == 0:
                 print("Waiting for the serial communication.")
             s.write(b"$x\r\n")
-            time.sleep(0.1)
             self.fun.serial_com_check(s, toprint=True)
             self.fun.simple_line(s, xmove, ymove)
 
@@ -55,7 +47,7 @@ class Scanner:
     def scan_photo(self, camera=None, preview=True):
         """ Scan with taking pictures"""
         if camera is None:
-            camera = PiCamera(resolution=(2592, 1944))  # resolution=(4056, 3040)
+            camera = PiCamera(resolution=(2592, 1952))  # resolution=(4056, 3040)
 
         try:
             camera.hflip = True
@@ -80,6 +72,6 @@ class Scanner:
             if preview:
                 camera.stop_preview()
         except KeyboardInterrupt:
-            print("Scan interrupted by typing ctrl+c on the keybpard.")
+            print("Scan interrupted by typing ctrl+c on the keybpad.")
         finally:
             GPIO.cleanup()

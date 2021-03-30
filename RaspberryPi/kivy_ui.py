@@ -32,8 +32,6 @@ class CameraClick(BoxLayout):
         according to their captured time and date.
         """
         camera = self.ids["camera"]
-        print(camera)
-        print(camera._camera._camera)
         timestr = time.strftime("%Y%m%d_%H%M%S")
         
         # camera.export_to_png("IMG_{}.png".format(timestr))
@@ -51,7 +49,8 @@ class ScannerWidget(BoxLayout):
     def scan(self):
         camera_widget = self.ids["cameraclick"]
         camera = camera_widget.ids["camera"]
-        self.scanner.scan_photo(camera._camera._camera, preview=False)
+        picamera = camera._camera._camera
+        self.scanner.scan_photo(picamera, preview=False)
         print("scanning")
 
     def move(self, dx, dy):
