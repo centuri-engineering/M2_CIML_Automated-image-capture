@@ -54,11 +54,11 @@ def arg_def(conf, fun):
 
 # main code
 arg_def(conf, fun)
-answer = input("Check the above parameters. Do you want to continue (type 'y'/'n') ?")
-if answer == "y":
+answer = input("Check the above parameters. Do you want to continue ([Y/n) ?")
+if answer in ("y", "Y", ""):
     scanner = scan.Scanner(conf, fun)
     scanner.scan_photo()
-elif answer == "n":
+elif answer in ("n", "N"):
     print("Program canceled.")
 else:
     print("Program canceled because you did not type correctly 'y' or 'n' ! ")

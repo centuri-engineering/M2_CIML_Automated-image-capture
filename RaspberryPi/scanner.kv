@@ -1,10 +1,12 @@
 #:kivy 1.0
 <CameraClick>:
-    orientation: 'horizontal'
+    orientation: 'vertical'
+    id: cameraclick
     Camera:
         id: camera
-        resolution: (480, 800)
+        resolution: (800, 608)
         play: False
+	
     ToggleButton:
         text: 'Preview'
         on_press: camera.play = not camera.play
@@ -19,16 +21,10 @@
 <ScannerWidget>:
     size_hint_x: None
     orientation: 'horizontal'
-    Widget:
+    CameraClick:
+        id: cameraclick
         size_hint_x: None
         width: 600
-        canvas:
-            Color:
-                rgba: 0.4, 0.2, 0.7, 0.3
-            Rectangle:
-                size: 800, 600
-                pos: self.pos
-
     BoxLayout:
         size_hint_x: None
         width: 200
@@ -38,6 +34,9 @@
             size_hint_y: None
             height: 100
             orientation: 'vertical'
+            Button:
+                text: 'Scan'
+                on_press: root.scan()
             Label:
                 text: "Move the Camera"
                 font_size: '20sp'
