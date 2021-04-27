@@ -80,12 +80,15 @@ class Scanner:
             print("Scan interrupted by typing ctrl+c on the keypad.")
         finally:
             GPIO.cleanup()
+            if preview:
+                camera.stop_preview()
 
     def capture(self, im_path=None, camera=None):
-
+        t0 = time.time()
         timestr = time.strftime("%Y%m%d_%H%M%S")
+        print("t0", timestr)
         if im_path is None:
-            im_path = self.conf.img_dir / f"cap_{timestr}.png"
+            im_path = self.conf.img_dir / f"cap_{timestr}.jpg"
 
         if camera is None:
             res_buf = None
@@ -93,9 +96,11 @@ class Scanner:
         else:
             res_buf = camera.resolution
             camera.resolution = (2592, 1952)
-
+        print("dt1:", time.time() - t0)
         with open(im_path, "bw") as fh:
             camera.capture(fh)
         if res_buf:
             camera.resolution = res_buf
+        print("dt2:", time.time() - t0)
+
         print(f"captured {im_path}")

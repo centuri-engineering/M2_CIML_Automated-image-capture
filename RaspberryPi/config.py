@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from functions import hms_to_sec
 
+
 @dataclass
 class Config:
 
@@ -19,7 +20,7 @@ class Config:
     info = {
         "total_duration": total_duration,
         "delay": delay,
-        "delay_for_action": 1,
+        "delay_for_action": 0.01,
         "well_loop": 1,
         "box_loop": 1,
     }
@@ -42,9 +43,8 @@ class Config:
         # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
         "board_path": "/dev/ttyACM0",
     }
-    img_dir = Path(os.environ['HOME']) / "ScannerImages"
-    
-    
+    img_dir = Path(os.environ["HOME"]) / "ScannerImages"
+
     @property
     def box(self):
         box_ = {

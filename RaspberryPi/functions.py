@@ -125,13 +125,10 @@ def simple_line(s, xmove, ymove):
     """Send a simple GCODE line with X and Y coords to grbl"""
     s.write(b"G91 \r\n")
     serial_com_check(s, toprint=True)
-    time.sleep(0.1)
     s.write(b"G0 X" + str(xmove).encode() + b" Y" + str(ymove).encode() + b"\r\n")
     serial_com_check(s, toprint=True)
-    time.sleep(0.1)
     s.write(b"G90 \r\n")
     serial_com_check(s, toprint=True)
-    time.sleep(0.1)
 
 
 def scan(
@@ -169,7 +166,7 @@ def scan(
 
     while s.in_waiting == 0:
         print("Waiting for the serial connection.", end="\r")
-        time.sleep(0.5)
+        time.sleep(0.001)
 
     serial_com_check(s, toprint=True)
 
@@ -210,7 +207,7 @@ def scan(
             step_time = round(time.time())
             while (int(step_time) - int(start)) != int(start_loop):
                 time_left = int(step_time) - int(start)
-                time.sleep(0.5)
+                time.sleep(0.01)
                 step_time = round(time.time())
                 time_left_loop = str(
                     datetime.timedelta(seconds=(int(start_loop) - time_left))
@@ -228,7 +225,6 @@ def scan(
         if relay is not None:
             GPIO.output(relay, False)
 
-        time.sleep(1)
         prev_x_mv = 0
         prev_y_mv = 0
 
