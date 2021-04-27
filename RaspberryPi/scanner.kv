@@ -1,7 +1,4 @@
 #:kivy 1.0
-<CameraClick>:
-    orientation: 'vertical'
-    id: cameraclick
 
 <ScannerWidget>:
     size_hint_x: None
@@ -17,8 +14,9 @@
             width: 600
             play: False
         ToggleButton:
+            id: preview
             text: 'Preview'
-            on_press: camera.play = not camera.play
+            on_press: root.preview()
             size_hint_y: None
             height: '48dp'
         Button:
@@ -43,7 +41,7 @@
                 font_size: '20sp'
             Label:
                 id: pos_lbl
-                text: root.head_pos_str
+                text: f'x: 0.0, y: 0.0'
             Label:
                 id: step_lbl
                 text: f"step: {10**step.value:.02f} cm"
