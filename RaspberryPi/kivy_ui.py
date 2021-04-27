@@ -1,19 +1,13 @@
 """
-Application built from a  .kv file
-==================================
+Kivy user interface for the worm photo booth
+============================================
 
-This shows how to implicitly use a .kv file for your application. You
-should see a full screen button labelled "Hello from test.kv".
-
-After Kivy instantiates a subclass of App, it implicitly searches for a .kv
-file. The file test.kv is selected because the name of the subclass of App is
-TestApp, which implies that kivy should try to load "test.kv". That file
-contains a root Widget.
 """
 import time
 
 import kivy
 from kivy.app import App
+from kivy.properties import NumericProperty, ListProperty, BooleanProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
@@ -34,10 +28,20 @@ class ScannerWidget(BoxLayout):
     def head_pos_str(self):
         return f"current position: x: {self.head_pos[0]}, y: {self.head_pos[1]}"
 
+    @property
+    def picamera(self):
+        """The underlying kivy camera"""
+        return self.kvcamera._camera._camera
+
+    @property
+    def kvcamera(self):
+        """The camera interface in kivy"""
+        return self.ids["camera"]
+
     def scan(self):
-        camera = self.ids["camera"]
-        picamera = camera._camera._camera
-        self.scanner.scan_photo(picamera, preview=False)
+        if not self.kvcamera._camera.stopped:
+            self.kvcamera._camera.stop()
+        self.scanner.scan_photo(self.picamera, preview=False)
         print("scanning")
 
     def move(self, dx, dy):
@@ -54,9 +58,12 @@ class ScannerWidget(BoxLayout):
         self.scanner.homing()
 
     def capture(self):
-        camera = self.ids["camera"]
-        picamera = camera._camera._camera
-        self.scanner.capture(picamera)
+        if not self.kvcamera._camera.stopped:
+            self.kvcamera._camera.stop()
+        self.scanner.capture(camera=self.picamera)
+
+    def preview(self):
+        self.kvcamera.play = not self.kvcamera.play
 
 
 class ScannerApp(App):

@@ -1,7 +1,4 @@
 #:kivy 1.0
-<CameraClick>:
-    orientation: 'vertical'
-    id: cameraclick
 
 <ScannerWidget>:
     size_hint_x: None
@@ -18,7 +15,7 @@
             play: False
         ToggleButton:
             text: 'Preview'
-            on_press: camera.play = not camera.play
+            on_press: root.preview()
             size_hint_y: None
             height: '48dp'
         Button:

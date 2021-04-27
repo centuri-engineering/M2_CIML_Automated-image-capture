@@ -2,7 +2,7 @@
 # libraries import
 import os
 import time
-from functools import partial 
+from functools import partial
 
 import serial
 
@@ -10,14 +10,8 @@ import RPi.GPIO as GPIO
 from picamera import PiCamera
 
 
-from functions import (
-    well_scan,
-    box_scan,
-    homing,
-    simple_line,
-    serial_com_check,
-    scan
-)
+from functions import well_scan, box_scan, homing, simple_line, serial_com_check, scan
+
 
 class Scanner:
     """Class Scanner to help scan the XY stage """
@@ -33,7 +27,7 @@ class Scanner:
             conf.ser_set["board_path"], conf.ser_set["baudrate"]
         )
         self.serial.close()
-        
+
         if not self.conf.img_dir.exists():
             os.makedirs(self.conf.img_dir)
 
@@ -77,18 +71,18 @@ class Scanner:
                     self.conf,
                     relay=self.relay_light,
                     action=partial(self.capture, camera=camera),
-                    img_dir=self.conf.img_dir
+                    img_dir=self.conf.img_dir,
                 )
                 GPIO.cleanup()
             if preview:
                 camera.stop_preview()
         except KeyboardInterrupt:
-            print("Scan interrupted by typing ctrl+c on the keybpad.")
+            print("Scan interrupted by typing ctrl+c on the keypad.")
         finally:
             GPIO.cleanup()
 
     def capture(self, im_path=None, camera=None):
-        
+
         timestr = time.strftime("%Y%m%d_%H%M%S")
         if im_path is None:
             im_path = self.conf.img_dir / f"cap_{timestr}.png"
@@ -99,8 +93,8 @@ class Scanner:
         else:
             res_buf = camera.resolution
             camera.resolution = (2592, 1952)
-            
-        with open(im_path, 'bw') as fh:
+
+        with open(im_path, "bw") as fh:
             camera.capture(fh)
         if res_buf:
             camera.resolution = res_buf
