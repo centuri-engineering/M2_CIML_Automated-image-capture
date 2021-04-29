@@ -11,14 +11,65 @@ from kivy.properties import NumericProperty, ListProperty, BooleanProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.camera import Camera as UixCamera
+from kivy.uix.image import Image
+from kivy.graphics.texture import Texture
 
+from kivy.core.camera.camera_picamera import CameraPiCamera
 
 from scanner import Scanner
+from camera import setup_camera, capture as core_capture
 from config import Config
 import config as conf
 
 
 kivy.require("1.11.1")
+
+
+class CoreCamera(CameraPiCamera):
+    def init_camera(self):
+        if self._camera is not None:
+            self._camera.close()
+        self._camera = setup_camera(self._camera)
+        self.fps = 1.0 / self._camera.framerate
+        if not self.stopped:
+            self.start
+
+        self._texture = Texture.create(self._camera.resolution)
+        self._texture.flip_vertical()
+        self.dispatch("on_load")
+
+    @property
+    def resolution(self):
+        return self._camera.resolution
+
+    @resolution.setter
+    def resolution(self, resolution):
+        self._camera.resolution = resolution
+
+
+class KvCamera(Image):
+
+    play = BooleanProperty(False)
+    resolution = ListProperty([-1, -1])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._camera = CoreCamera(stopped=True)
+        self._camera.bind(on_texture=self.on_tex)
+
+    def on_play(self, instance, value):
+        if not self._camera:
+            return
+        if value:
+            self._camera.start()
+        else:
+            self._camera.stop()
+
+    def on_tex(self, camera):
+        self.texture = texture = camera.texture
+        self.texture_size = list(texture.size)
+        self.canvas.ask_update()
 
 
 class ScannerWidget(BoxLayout):
@@ -66,7 +117,7 @@ class ScannerWidget(BoxLayout):
 
     def capture(self):
         self.stop_camera()
-        self.scanner.capture(camera=self.picamera)
+        core_capture(camera=self.picamera)
 
     def preview(self):
         self.kvcamera.play = not self.kvcamera.play

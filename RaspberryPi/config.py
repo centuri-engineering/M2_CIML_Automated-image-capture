@@ -43,6 +43,23 @@ class Config:
         # /dev/ttyACM0 (Joy-it), /dev/ttyUSB0 (original board)
         "board_path": "/dev/ttyACM0",
     }
+
+    # It is not possible to fix the analog and digital gains
+    # might be interesting to use picamerax instead
+    #  see https://github.com/labthings/picamerax
+    cam_set = {
+        "hflip": True,
+        "resolution": (2592, 1952),
+        "iso": 400,
+        "analog_gain": 5.0,
+        "digital_gain": 1.0,
+        "framerate": 30,
+        "shutter_speed": 300000,
+        "exposure_mode": "off",
+        "awb_mode": "off",
+        "awb_gains": (3.0, 1.0),
+    }
+
     img_dir = Path(os.environ["HOME"]) / "ScannerImages"
 
     @property

@@ -7,10 +7,9 @@ from functools import partial
 import serial
 
 import RPi.GPIO as GPIO
-from picamera import PiCamera
-
 
 from functions import well_scan, box_scan, homing, simple_line, serial_com_check, scan
+from camera import setup_camera, capture
 
 
 class Scanner:
@@ -52,12 +51,8 @@ class Scanner:
 
     def scan_photo(self, camera=None, preview=True):
         """ Scan with taking pictures"""
-        if camera is None:
-            camera = PiCamera(resolution=(2592, 1952))  # resolution=(4056, 3040)
-
         try:
-            camera.hflip = True
-            camera.shutter_speed = 30000  # to avoid blinking
+            camera = setup_camera(camera)
             if preview:
                 camera.start_preview(fullscreen=False, window=(100, 20, 640, 480))
             with self.serial as s:
@@ -70,7 +65,7 @@ class Scanner:
                     self.box_coord,
                     self.conf,
                     relay=self.relay_light,
-                    action=partial(self.capture, camera=camera),
+                    action=partial(capture, camera=camera),
                     img_dir=self.conf.img_dir,
                 )
                 GPIO.cleanup()
@@ -82,25 +77,3 @@ class Scanner:
             GPIO.cleanup()
             if preview:
                 camera.stop_preview()
-
-    def capture(self, im_path=None, camera=None):
-        t0 = time.time()
-        timestr = time.strftime("%Y%m%d_%H%M%S")
-        print("t0", timestr)
-        if im_path is None:
-            im_path = self.conf.img_dir / f"cap_{timestr}.jpg"
-
-        if camera is None:
-            res_buf = None
-            camera = PiCamera(resolution=(2592, 1952))  # resolution=(4056, 3040)
-        else:
-            res_buf = camera.resolution
-            camera.resolution = (2592, 1952)
-        print("dt1:", time.time() - t0)
-        with open(im_path, "bw") as fh:
-            camera.capture(fh)
-        if res_buf:
-            camera.resolution = res_buf
-        print("dt2:", time.time() - t0)
-
-        print(f"captured {im_path}")

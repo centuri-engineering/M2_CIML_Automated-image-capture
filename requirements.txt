@@ -16,3 +16,4 @@ PyYAML==5.4.1
 requests==2.25.1
 RPi.GPIO==0.7.0
 urllib3==1.26.4
+picamerax[array]==20.9.1
