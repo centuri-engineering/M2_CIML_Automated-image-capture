@@ -3,7 +3,11 @@ Kivy user interface for the worm photo booth
 ============================================
 
 """
+import os
 import time
+from threading import Thread
+from datetime import datetime
+from pathlib import Path
 
 import kivy
 from kivy.app import App
@@ -20,13 +24,18 @@ from kivy.core.camera.camera_picamera import CameraPiCamera
 from scanner import Scanner
 from camera import setup_camera, capture as core_capture
 from config import Config
-import config as conf
 
 
 kivy.require("1.11.1")
 
 
 class CoreCamera(CameraPiCamera):
+    """Sub class of Kivy picamera interface
+
+    We setup the camera manually to fix the parameters
+    at startup from the configuration
+    """
+
     def init_camera(self):
         if self._camera is not None:
             self._camera.close()
@@ -77,6 +86,11 @@ class ScannerWidget(BoxLayout):
     y_pos = NumericProperty(0.0)
 
     conf = Config()
+    timestr = time.strftime("%Y%m%d_%H%M%S")
+
+    conf.img_dir = Path(conf.img_dir) / timestr
+    if not conf.img_dir.is_dir():
+        conf.img_dir.mkdir()
     scanner = Scanner(conf)
 
     @property
@@ -91,9 +105,17 @@ class ScannerWidget(BoxLayout):
 
     def scan(self):
         self.stop_camera()
+        self.scan_thread = Thread(
+            target=self.scanner.scan_photo,
+            kwargs={"camera": self.picamera, "preview": False},
+        )
 
-        self.scanner.scan_photo(self.picamera, preview=False)
-        print("scanning")
+        print("start scanning thread")
+        self.scan_thread.start()
+
+    def stop(self):
+        print("stopping the thread in 1s")
+        self.scan_thread.join(1.0)
 
     def stop_camera(self):
         if not self.kvcamera._camera.stopped:

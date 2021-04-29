@@ -31,8 +31,11 @@
 
         BoxLayout:
             size_hint_y: None
-            height: 150
+            height: 200
             orientation: 'vertical'
+            Button:
+                text: 'stop scan'
+                on_press: root.stop()
             Button:
                 text: 'Scan'
                 on_press: root.scan()
