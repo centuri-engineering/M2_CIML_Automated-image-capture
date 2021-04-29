@@ -141,6 +141,7 @@ def scan(
     action=None,
     action_args=None,
     action_kwargs=None,
+    event=None,
 ):
     """Simple scan of the well and box."""
     if img_dir is None:
@@ -257,8 +258,16 @@ def scan(
                         / f"image{it0+1:04d}_box{it1+1:04d}-loop{it2+1:04d}_well{it3+1:04d}-loop{it4+1:04d}.jpg"
                     )
                     action(im_path, *action_args, **action_kwargs)
+                if event and event.is_set():
+                    break
+            if event and event.is_set():
+                break
+
         if relay is not None:
             GPIO.output(relay, True)
+
+        if event and event.is_set():
+            return 1
 
 
 def hms_to_sec(t):

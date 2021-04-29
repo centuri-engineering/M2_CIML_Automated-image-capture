@@ -5,10 +5,12 @@ Kivy user interface for the worm photo booth
 """
 import os
 import time
-from threading import Thread
+from threading import Thread, Event
 from datetime import datetime
 from pathlib import Path
+import logging
 
+import numpy as np
 import kivy
 from kivy.app import App
 from kivy.properties import NumericProperty, ListProperty, BooleanProperty
@@ -27,6 +29,7 @@ from config import Config
 
 
 kivy.require("1.11.1")
+log = logging.getLogger(__name__)
 
 
 class CoreCamera(CameraPiCamera):
@@ -39,7 +42,7 @@ class CoreCamera(CameraPiCamera):
     def init_camera(self):
         if self._camera is not None:
             self._camera.close()
-        self._camera = setup_camera(self._camera)
+        self._camera = setup_camera(self._camera, resolution=(640, 480))
         self.fps = 1.0 / self._camera.framerate
         if not self.stopped:
             self.start
@@ -68,6 +71,7 @@ class KvCamera(Image):
         self._camera.bind(on_texture=self.on_tex)
 
     def on_play(self, instance, value):
+
         if not self._camera:
             return
         if value:
@@ -92,6 +96,7 @@ class ScannerWidget(BoxLayout):
     if not conf.img_dir.is_dir():
         conf.img_dir.mkdir()
     scanner = Scanner(conf)
+    interrupt = Event()
 
     @property
     def picamera(self):
@@ -104,18 +109,25 @@ class ScannerWidget(BoxLayout):
         return self.ids["camera"]
 
     def scan(self):
+
         self.stop_camera()
+        # self.picamera = setup_camera(self.picamera)
+
         self.scan_thread = Thread(
             target=self.scanner.scan_photo,
-            kwargs={"camera": self.picamera, "preview": False},
+            kwargs={"camera": self.picamera, "preview": False, "event": self.interrupt},
         )
 
         print("start scanning thread")
         self.scan_thread.start()
 
     def stop(self):
-        print("stopping the thread in 1s")
-        self.scan_thread.join(1.0)
+        print("stopping the thread")
+        try:
+            self.interrupt.set()
+            self.scan_thread.join()
+        except AttirbuteError:
+            pass
 
     def stop_camera(self):
         if not self.kvcamera._camera.stopped:

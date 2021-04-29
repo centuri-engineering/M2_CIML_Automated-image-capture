@@ -53,7 +53,6 @@ class Config:
         "iso": 400,
         "analog_gain": 5.0,
         "digital_gain": 1.0,
-        "framerate": 30,
         "shutter_speed": 300000,
         "exposure_mode": "off",
         "awb_mode": "off",

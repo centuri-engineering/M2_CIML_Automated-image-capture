@@ -4,11 +4,13 @@ from picamerax import PiCamera
 from config import Config
 
 
-def setup_camera(camera=None):
+def setup_camera(camera=None, **kwargs):
     """Modifies a camera instance or creates one with the settings defined in config"""
     if camera is None:
         camera = PiCamera()
-    for (attr, value) in Config.cam_set.items():
+    settings = Config.cam_set.copy()
+    settings.update(kwargs)
+    for (attr, value) in settings.items():
         setattr(camera, attr, value)
 
     return camera

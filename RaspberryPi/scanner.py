@@ -49,7 +49,7 @@ class Scanner:
         with self.serial as s:
             scan(s, self.well_coord, self.box_coord, self.conf)
 
-    def scan_photo(self, camera=None, preview=True):
+    def scan_photo(self, camera=None, preview=True, event=None):
         """ Scan with taking pictures"""
         try:
             camera = setup_camera(camera)
@@ -67,6 +67,7 @@ class Scanner:
                     relay=self.relay_light,
                     action=partial(capture, camera=camera),
                     img_dir=self.conf.img_dir,
+                    event=event,
                 )
                 GPIO.cleanup()
             if preview:
